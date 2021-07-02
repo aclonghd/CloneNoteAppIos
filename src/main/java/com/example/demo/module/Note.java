@@ -14,7 +14,7 @@ public class Note {
     @Column(name ="NAME")
     private String name;
 
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION", columnDefinition="text")
     private String description;
 
     public Note() {
