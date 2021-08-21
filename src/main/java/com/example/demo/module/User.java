@@ -1,6 +1,9 @@
 package com.example.demo.module;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "User")
@@ -10,41 +13,39 @@ public class User {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "username")
+    @Column(name = "USERNAME", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    @Column(name = "firstName")
+    @Column(name = "FIRSTNAME", nullable = false)
     private String firstName;
 
-    @Column(name = "lastName")
+    @Column(name = "LASTNAME", nullable = false)
     private String lastName;
 
-    @Column(name = "age")
+    @Column(name = "AGE", nullable = false)
     private int age;
 
-    @Column(name = "gender")
+    @Column(name = "GENDER", nullable = false)
     private String gender;
 
-    private Note note;
+    @JsonIgnoreProperties({"user"})
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private Set<Note> notes;
 
     public User() {
     }
 
-    public User(String email, String username, String password, String firstName, String lastName, int age, String gender, Note note) {
-        this.email = email;
+    public User(String username, String password, String firstName, String lastName, int age, String gender, Set<Note> notes) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.gender = gender;
-        this.note = note;
+        this.notes = notes;
     }
 
     public Long getId() {
@@ -53,14 +54,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getUsername() {
@@ -111,18 +104,25 @@ public class User {
         this.gender = gender;
     }
 
+    public Set<Note> getNote() {
+        return notes;
+    }
+
+    public void setNote(Set<Note> notes) {
+        this.notes = notes;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
-                ", note=" + note +
+                ", note=" + notes +
                 '}';
     }
 }
