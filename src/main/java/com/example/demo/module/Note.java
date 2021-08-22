@@ -1,5 +1,7 @@
 package com.example.demo.module;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,17 +14,32 @@ public class Note {
     private Long id;
 
     @Column(name ="NAME")
-    private String name;
+    private String title;
 
     @Column(name = "DESCRIPTION", columnDefinition="text")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name="USERID", nullable=false, referencedColumnName="ID")
+    @JsonIgnoreProperties({"note"})
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Note() {
     }
 
-    public Note(String name, String description) {
-        this.name = name;
+    public Note(Long id, String title, String description, User user) {
+        this.id = id;
+        this.title = title;
         this.description = description;
+        this.user = user;
     }
 
     public Long getId() {
@@ -33,12 +50,12 @@ public class Note {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -53,7 +70,7 @@ public class Note {
     public String toString() {
         return "Note{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + title + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }
