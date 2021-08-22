@@ -33,7 +33,7 @@ public class NoteService {
             throw new IllegalStateException("Some thing wrong");
         }
         User user = this.userRepository.findByUsername(username).get();
-        List<Note> listNoteEntity = noteRepository.findAllByUserId(user.getId());
+        List<Note> listNoteEntity = noteRepository.findAllByUserIdOrderById(user.getId());
         List<NoteDto> listNoteDto = new LinkedList<>();
         for (Note noteEntity:listNoteEntity) {
             NoteDto noteResponseDto = this.noteMapper.entityToDto(noteEntity);
