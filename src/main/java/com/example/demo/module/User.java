@@ -1,5 +1,6 @@
 package com.example.demo.module;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -7,11 +8,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Users")
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
+
 
     @Column(name = "USERNAME", nullable = false, unique = true)
     private String username;
@@ -35,17 +38,22 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Note> notes;
 
+
     public User() {
     }
 
+
     public User(String username, String password, String firstName, String lastName, int age, String gender, Set<Note> notes) {
+
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.gender = gender;
+
         this.notes = notes;
+
     }
 
     public Long getId() {
@@ -55,6 +63,8 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
+
+
 
     public String getUsername() {
         return username;
@@ -104,6 +114,7 @@ public class User {
         this.gender = gender;
     }
 
+
     public Set<Note> getNote() {
         return notes;
     }
@@ -112,17 +123,22 @@ public class User {
         this.notes = notes;
     }
 
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
+
+
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
+
                 ", note=" + notes +
+
                 '}';
     }
 }
